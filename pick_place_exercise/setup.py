@@ -28,7 +28,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'simple_pick = pick_place_exercise.simple_pick:main'
+            'simple_pick = pick_place_exercise.simple_pick:main',
+            'automated_color_sorting = pick_place_exercise.automated_color_sorting:main',
+            'test_gripper_setup = pick_place_exercise.test_gripper_setup:main',
+            'run_machine_vision = pick_place_exercise.run_machine_vision:main',
+            'test_machine_vision_safe = pick_place_exercise.simple_machine_vision_test:main'
         ],
     },
 )
