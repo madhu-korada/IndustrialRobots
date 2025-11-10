@@ -1,51 +1,99 @@
 objects:
-  blue_sphere:
-    shape: sphere
-    size: 0.03
-    pose: {x: 0.45, y: 0.25, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: blue
-
-  red_sphere:
-    shape: sphere
-    size: 0.03
-    pose: {x: 0.45, y: -0.25, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: red
-
-  green_sphere:
-    shape: sphere
-    size: 0.03
-    pose: {x: 0.45, y: 0.09, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: green
-
-  purple_sphere:
-    shape: sphere
-    size: 0.03
-    pose: {x: 0.45, y: -0.09, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: purple
-
-  green_cylinder:
-    shape: cylinder
-    size: {radius: 0.03, height: 0.05}
-    pose: {x: 0.65, y: -0.09, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: green
-
-  purple_cylinder:
+  red_cylinder_1:
     shape: cylinder
     size: {radius: 0.02, height: 0.06}
-    pose: {x: 0.65, y: 0.25, z: 1.01, roll: 0, pitch: 0, yaw: 0}
-    color: purple
-
-  red_cylinder:
-    shape: cylinder
-    size: {radius: 0.02, height: 0.06}
-    pose: {x: 0.65, y: 0.09, z: 1.01, roll: 0, pitch: 0, yaw: 0}
+    pose: {x: 0.45, y: -0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
     color: red
 
-  blue_cylinder:
+  red_cylinder_2:
     shape: cylinder
-    size: {radius: 0.03, height: 0.07}
-    pose: {x: 0.65, y: -0.25, z: 1.01, roll: 0, pitch: 0, yaw: 0}
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.52, y: -0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: red
+
+  red_cylinder_3:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.58, y: -0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: red
+
+  red_cylinder_4:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.65, y: -0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: red
+
+  green_cylinder_1:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.45, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: green
+
+  green_cylinder_2:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.52, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: green
+
+  green_cylinder_3:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.58, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: green
+
+  green_cylinder_4:
+    shape: cylinder
+    size: {radius: 0.02, height: 0.06}
+    pose: {x: 0.65, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: green
+
+  blue_box_1:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.45, y: 0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
     color: blue
+
+  blue_box_2:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.52, y: 0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: blue
+
+  blue_box_3:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.58, y: 0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: blue
+
+  blue_box_4:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.65, y: 0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: blue
+
+  purple_box_1:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.45, y: 0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: purple
+
+  purple_box_2:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.52, y: 0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: purple
+
+  purple_box_3:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.58, y: 0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: purple
+
+  purple_box_4:
+    shape: box
+    size: {x: 0.04, y: 0.04, z: 0.06}
+    pose: {x: 0.65, y: 0.25, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    color: purple
 
 
 obstacles:

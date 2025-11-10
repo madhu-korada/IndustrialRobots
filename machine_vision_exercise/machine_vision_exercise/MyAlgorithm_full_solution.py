@@ -244,16 +244,24 @@ def main():
         "purple": dict(rmin=100, rmax=255, gmin=0,   gmax=100, bmin=10, bmax=255)
     }
 
-    # Define pick sequence (color, shape, target)
+    # Define pick sequence (color, shape, target) - 16 objects total
     PICK_SEQUENCE = [
-        ("green", "cylinder", 1),   # green_cylinder -> target1
-        ("blue", "sphere", 2),      # blue_sphere -> target2
-        ("red", "sphere", 3),       # red_sphere -> target3
-        ("green", "sphere", 4),     # green_sphere -> target4
-        ("purple", "sphere", 5),    # purple_sphere -> target5
-        ("purple", "cylinder", 6),  # purple_cylinder -> target6
-        ("red", "cylinder", 7),     # red_cylinder -> target7
-        ("blue", "cylinder", 8),    # blue_cylinder -> target8
+        ("red", "cylinder_1", 1),      # red_cylinder_1 -> target1
+        ("red", "cylinder_2", 2),      # red_cylinder_2 -> target2
+        ("red", "cylinder_3", 3),      # red_cylinder_3 -> target3
+        ("red", "cylinder_4", 4),      # red_cylinder_4 -> target4
+        ("green", "cylinder_1", 5),    # green_cylinder_1 -> target5
+        ("green", "cylinder_2", 6),    # green_cylinder_2 -> target6
+        ("green", "cylinder_3", 7),    # green_cylinder_3 -> target7
+        ("green", "cylinder_4", 8),    # green_cylinder_4 -> target8
+        ("blue", "box_1", 9),          # blue_box_1 -> target9
+        ("blue", "box_2", 10),         # blue_box_2 -> target10
+        ("blue", "box_3", 11),         # blue_box_3 -> target11
+        ("blue", "box_4", 12),         # blue_box_4 -> target12
+        ("purple", "box_1", 13),       # purple_box_1 -> target13
+        ("purple", "box_2", 14),       # purple_box_2 -> target14
+        ("purple", "box_3", 15),       # purple_box_3 -> target15
+        ("purple", "box_4", 16),       # purple_box_4 -> target16
     ]
 
     # Initialize perception once
