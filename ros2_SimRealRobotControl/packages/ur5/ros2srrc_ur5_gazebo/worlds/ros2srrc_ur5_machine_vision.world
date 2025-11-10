@@ -1206,28 +1206,28 @@
 
     <!-- Bookshelf for placing objects (simple box-based) -->
     <model name='bookshelf'>
-      <pose>-0.6 0 0 0 0 1.57</pose>
+      <pose>-0.8 0.0 0.0 0 0 1.57</pose>
       <static>1</static>
       <link name='base'>
         <collision name='base_collision'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.05</size>
+              <size>1.5 0.75 0.125</size>
             </box>
           </geometry>
-          <pose>0 0 0.025 0 0 0</pose>
+          <pose>0.0 0.0 0.0625 0 0 0</pose>
         </collision>
         <visual name='base_visual'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.05</size>
+              <size>1.5 0.75 0.125</size>
             </box>
           </geometry>
           <material>
             <ambient>0.4 0.2 0.1 1</ambient>
             <diffuse>0.4 0.2 0.1 1</diffuse>
           </material>
-          <pose>0 0 0.025 0 0 0</pose>
+          <pose>0.0 0.0 0.0625 0 0 0</pose>
         </visual>
       </link>
       <!-- Shelf 1 (bottom) -->
@@ -1235,22 +1235,22 @@
         <collision name='shelf1_collision'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
-          <pose>0 0 0.2 0 0 0</pose>
+          <pose>0.0 0.0 0.5 0 0 0</pose>
         </collision>
         <visual name='shelf1_visual'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
           <material>
             <ambient>0.4 0.2 0.1 1</ambient>
             <diffuse>0.4 0.2 0.1 1</diffuse>
           </material>
-          <pose>0 0 0.2 0 0 0</pose>
+          <pose>0.0 0.0 0.5 0 0 0</pose>
         </visual>
       </link>
       <joint name='shelf1_joint' type='fixed'>
@@ -1262,22 +1262,22 @@
         <collision name='shelf2_collision'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
-          <pose>0 0 0.4 0 0 0</pose>
+          <pose>0.0 0.0 1.0 0 0 0</pose>
         </collision>
         <visual name='shelf2_visual'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
           <material>
             <ambient>0.4 0.2 0.1 1</ambient>
             <diffuse>0.4 0.2 0.1 1</diffuse>
           </material>
-          <pose>0 0 0.4 0 0 0</pose>
+          <pose>0.0 0.0 1.0 0 0 0</pose>
         </visual>
       </link>
       <joint name='shelf2_joint' type='fixed'>
@@ -1289,22 +1289,22 @@
         <collision name='shelf3_collision'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
-          <pose>0 0 0.6 0 0 0</pose>
+          <pose>0.0 0.0 1.5 0 0 0</pose>
         </collision>
         <visual name='shelf3_visual'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
           <material>
             <ambient>0.4 0.2 0.1 1</ambient>
             <diffuse>0.4 0.2 0.1 1</diffuse>
           </material>
-          <pose>0 0 0.6 0 0 0</pose>
+          <pose>0.0 0.0 1.5 0 0 0</pose>
         </visual>
       </link>
       <joint name='shelf3_joint' type='fixed'>
@@ -1316,22 +1316,22 @@
         <collision name='shelf4_collision'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
-          <pose>0 0 0.8 0 0 0</pose>
+          <pose>0.0 0.0 2.0 0 0 0</pose>
         </collision>
         <visual name='shelf4_visual'>
           <geometry>
             <box>
-              <size>0.6 0.3 0.02</size>
+              <size>1.5 0.75 0.05</size>
             </box>
           </geometry>
           <material>
             <ambient>0.4 0.2 0.1 1</ambient>
             <diffuse>0.4 0.2 0.1 1</diffuse>
           </material>
-          <pose>0 0 0.8 0 0 0</pose>
+          <pose>0.0 0.0 2.0 0 0 0</pose>
         </visual>
       </link>
       <joint name='shelf4_joint' type='fixed'>
@@ -1343,22 +1343,22 @@
         <collision name='back_collision'>
           <geometry>
             <box>
-              <size>0.6 0.02 0.85</size>
+              <size>1.5 0.05 2.125</size>
             </box>
           </geometry>
-          <pose>0 0.14 0.425 0 0 0</pose>
+          <pose>0.0 0.35000000000000003 1.0625 0 0 0</pose>
         </collision>
         <visual name='back_visual'>
           <geometry>
             <box>
-              <size>0.6 0.02 0.85</size>
+              <size>1.5 0.05 2.125</size>
             </box>
           </geometry>
           <material>
             <ambient>0.3 0.15 0.05 1</ambient>
             <diffuse>0.3 0.15 0.05 1</diffuse>
           </material>
-          <pose>0 0.14 0.425 0 0 0</pose>
+          <pose>0.0 0.35000000000000003 1.0625 0 0 0</pose>
         </visual>
       </link>
       <joint name='back_joint' type='fixed'>
