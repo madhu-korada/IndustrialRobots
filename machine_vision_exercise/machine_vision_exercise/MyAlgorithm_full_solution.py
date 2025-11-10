@@ -244,137 +244,158 @@ def main():
         "purple": dict(rmin=100, rmax=255, gmin=0,   gmax=100, bmin=10, bmax=255)
     }
 
-    # ===== Your test =====
+    # Define pick sequence (color, shape, target)
+    PICK_SEQUENCE = [
+        ("green", "cylinder", 1),   # green_cylinder -> target1
+        ("blue", "sphere", 2),      # blue_sphere -> target2
+        ("red", "sphere", 3),       # red_sphere -> target3
+        ("green", "sphere", 4),     # green_sphere -> target4
+        ("purple", "sphere", 5),    # purple_sphere -> target5
+        ("purple", "cylinder", 6),  # purple_cylinder -> target6
+        ("red", "cylinder", 7),     # red_cylinder -> target7
+        ("blue", "cylinder", 8),    # blue_cylinder -> target8
+    ]
+
+    # Initialize perception once
     perception = PerceptionNode()
     perception.load_models_info()
     reset(perception=perception)
 
-    # COLORS = ["red", "green", "blue", "purple"]
-    # SHAPES = ["sphere", "cylinder"]
-    # Pick by index:
-    color_idx = 1   # COLORS[3] -> "purple"
-    shape_idx = 1   # SHAPES[1] -> "cylinder"
-    target_idx = 13
+    print("=" * 80)
+    print("MULTI-OBJECT PICK AND PLACE - CONTINUOUS OPERATION")
+    print("=" * 80)
+    print(f"Total objects to pick: {len(PICK_SEQUENCE)}")
+    print()
 
-    color_name = COLORS[color_idx]
-    shape_name = SHAPES[shape_idx]
-    target_name = TARGETS[target_idx - 1]
-
-    object_name = f"{color_name}_{shape_name}"
-    print(object_name)
-
-    color_param = COLOR_PRESETS[color_name].copy()
-
-    length, width, diameter, shape, color = perception.get_object_info(object_name)
-    print(diameter, width, length, shape, color)
-
-    # object_pos = [0.65, 0.09, 1.01]    # Red cylinder position
-    # target_pos = [-0.44, -0.06, 1.0]   # Target position
-
-    object_pos = []
-    print(perception.goal_list)
-    target_point = perception.get_target_position(target_name)
-    target_pos = [target_point.x, target_point.y, target_point.z]
-    print(target_pos)
-
-    # Orientations
-    down_orientation = [0, 90, 0]      # Gripper pointing down
-
-
-    # Step 1: Set up and go to home position
-    print("\n1. Setting up home position and moving there...")
-    set_home_position([0.0, -90.0, 0.0, 0.0, -90.0, 0.0])
-    # Use MoveAbsJ instead of back_to_home to avoid gripper operations
-    # MoveAbsJ([0.0, -90.0, 0.0, 0.0, -90.0, 0.0], 0.5, 2.0)
-    back_to_home()
+    # Loop through all objects
+    for pick_num, (color_name, shape_name, target_idx) in enumerate(PICK_SEQUENCE, 1):
+        print("\n" + "=" * 80)
+        print(f"PICKING OBJECT {pick_num}/{len(PICK_SEQUENCE)}")
+        print(f"Object: {color_name}_{shape_name} -> {TARGETS[target_idx-1]}")
+        print("=" * 80)
+        
+        try:
+            # Get object info
+            object_name = f"{color_name}_{shape_name}"
+            target_name = TARGETS[target_idx - 1]
+            
+            color_param = COLOR_PRESETS[color_name].copy()
+            length, width, diameter, shape, color = perception.get_object_info(object_name)
+            print(f"Object info: diameter={diameter}, shape={shape}, color={color}")
+            
+            # Get target position
+            target_point = perception.get_target_position(target_name)
+            if target_point is None:
+                print(f"✗ Target {target_name} not found! Skipping...")
+                continue
+            
+            target_pos = [target_point.x, target_point.y, target_point.z]
+            print(f"Target position: {target_pos}")
+            
+            object_pos = []
+            down_orientation = [0, 90, 0]  # Gripper pointing down
+            
+            # Step 1: Go to home position (only for first object)
+            if pick_num == 1:
+                print("\n1. Setting up home position and moving there...")
+                set_home_position([0.0, -90.0, 0.0, 0.0, -90.0, 0.0])
+                back_to_home()
+            else:
+                print("\n1. Returning to home position between picks...")
+                back_to_home()
+            
+            # Step 2: Wait briefly
+            time.sleep(1.0)
+            
+            # Step 3: Move to pre-pick position
+            print("\n2. Moving to pre-pick position...")
+            MoveAbsJ([0.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
+            
+            # Step 4: Start vision filters to detect object
+            print(f"\n3. Starting vision filters for {color_name} {shape_name}...")
+            perception.start_color_filter(
+                color=color_name,
+                rmax=color_param["rmax"], rmin=color_param["rmin"],
+                gmax=color_param["gmax"], gmin=color_param["gmin"],
+                bmax=color_param["bmax"], bmin=color_param["bmin"],
+            )
+            time.sleep(1)
+            
+            perception.start_shape_filter(color=color, shape=shape, radius=diameter/2)
+            time.sleep(1)
+            
+            # Step 5: Get object position using vision
+            object_pos = perception.get_object_position(object_name)
+            if not object_pos:
+                print(f"✗ Could not detect {object_name}! Skipping...")
+                reset(perception)
+                continue
+            
+            print(f"Object detected at: {object_pos}")
+            reset(perception)
+            
+            # Step 6: Move to safe position above object
+            print("\n4. Moving to safe position above object...")
+            above_object = [object_pos[0], object_pos[1], object_pos[2] + 0.15]
+            MoveJoint(above_object, down_orientation, 0.3, 1.0)
+            
+            # Step 7: Approach object
+            print("\n5. Approaching object...")
+            approach_object = [object_pos[0], object_pos[1], object_pos[2]]
+            MoveJoint(approach_object, down_orientation, 0.3, 1.0)
+            
+            # Step 8: Grip and attach object
+            print(f"\n6. Gripping {object_name}...")
+            percentage = perception.gripper_setting_percentage(diameter)
+            GripperSet(percentage, 1.0)
+            time.sleep(0.5)
+            attach(object_name)
+            print("✓ Object attached!")
+            
+            # Step 9: Lift object
+            print("\n7. Lifting object...")
+            above_object = [object_pos[0], object_pos[1], object_pos[2] + 0.15]
+            MoveJoint(above_object, down_orientation, 0.3, 1.0)
+            MoveAbsJ([0.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
+            
+            # Step 10: Move to target area
+            print(f"\n8. Moving to {target_name}...")
+            MoveAbsJ([180.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
+            above_target = [target_pos[0], target_pos[1], target_pos[2] + 0.15]
+            MoveJoint(above_target, down_orientation, 0.5, 1.0)
+            
+            # Step 11: Place object
+            print("\n9. Placing object...")
+            approach_target = [target_pos[0], target_pos[1], target_pos[2]]
+            MoveLinear(approach_target, down_orientation, 0.1, 1.0)
+            
+            # Step 12: Release object
+            print("\n10. Releasing object...")
+            detach()
+            GripperSet(0, 1.0)
+            time.sleep(0.5)
+            
+            # Step 13: Move away from placed object
+            approach_target = [target_pos[0], target_pos[1], target_pos[2] + 0.15]
+            MoveLinear(approach_target, down_orientation, 0.1, 1.5)
+            MoveAbsJ([180.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
+            
+            print(f"✓ {object_name} placed at {target_name}!")
+            
+        except Exception as e:
+            print(f"✗ Error processing {object_name}: {e}")
+            print("Continuing to next object...")
+            try:
+                reset(perception)
+                back_to_home()
+            except:
+                pass
     
-    # # Step 2: Skip workspace scanning
-    # perception.buildmap()
-    time.sleep(1.0)
-    # GripperSet(100, 1.0)
-    
-#     # Step 3: Move to pre-pick position (approach from side)
-    print("\n3. Moving to pre-pick position...")
-    MoveAbsJ([0.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
-
-
-
-#################################################################################################################
-    # # Step 4: Move to position above object (safe pick position)
-
-
-
-    # Start filters using presets; override any single value ad hoc if needed:
-    # e.g., _send_color_filter(perception, color_name, override={"gmin": 80})
-    perception.start_color_filter(
-        color=color_name,
-        rmax=color_param["rmax"], rmin=color_param["rmin"],
-        gmax=color_param["gmax"], gmin=color_param["gmin"],
-        bmax=color_param["bmax"], bmin=color_param["bmin"],
-    )
-    time.sleep(1)
-
-    perception.start_shape_filter(color=color,shape=shape,radius=diameter/2)
-    time.sleep(1)
-
-
-    object_pos = perception.get_object_position(object_name)
-
-    print(object_pos)
-
-    reset(perception)
-#################################################################################################################
-
-    print("\n4. Moving to safe position above object...")
-    above_object = [object_pos[0], object_pos[1], object_pos[2] + 0.15]
-    MoveJoint(above_object, down_orientation, 0.3, 1.0)
-    
-    # Step 5: Linear approach to object
-    print("\n5. Linear approach to object...")
-    approach_object = [object_pos[0], object_pos[1], object_pos[2]]
-    # MoveLinear(approach_object, down_orientation, 0.3, 1)
-    MoveJoint(approach_object, down_orientation, 0.3, 1.0)
-
-
-
-    
-    # Step 7: Attach object (skip gripper, use link attacher only)
-
-    print("\n7. Attaching object using link attacher...")
-    percentage = perception.gripper_setting_percentage(diameter)
-    GripperSet(percentage, 1.0)
-    attach(object_name)
-    print("✓ Object attached successfully!")
-    
-    # Step 8: Lift object to safe height
-
-    above_object = [object_pos[0], object_pos[1], object_pos[2] + 0.15]
-    MoveJoint(above_object, down_orientation, 0.3, 1.0)
-    MoveAbsJ([0.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
-    
-    # Step 9: Move to pre-place position (approach target area)
-
-    print("\n9. Moving to pre-place position...")
-    MoveAbsJ([180.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
-    above_target = [target_pos[0], target_pos[1], target_pos[2] + 0.15]
-    MoveJoint(above_target, down_orientation, 0.5, 1.0)
-    
-    # Step 10: Move to safe position above target
-    print("\n11. Linear approach to target...")
-    approach_target = [target_pos[0], target_pos[1], target_pos[2]]
-    MoveLinear(approach_target, down_orientation, 0.1, 1.0)
-    
-    # Step 11: Linear approach to target
-    detach()
-    GripperSet(0, 1.0)
-    
-    # Step 12: Place object at target
-    print("\n11. Linear approach to target...")
-    approach_target = [target_pos[0], target_pos[1], target_pos[2]+ 0.15]
-    MoveLinear(approach_target, down_orientation, 0.1, 1.5)
-    MoveAbsJ([180.0, -90.0, 90.0, -90.0, -90.0, 0.0], 0.5, 1.0)
-    
-    # Step 13: Release object (open gripper will auto-detach)
+    # All objects processed
+    print("\n" + "=" * 80)
+    print("ALL OBJECTS PICKED AND PLACED!")
+    print("=" * 80)
+    print(f"Successfully processed {len(PICK_SEQUENCE)} objects")
     back_to_home()
     
 
