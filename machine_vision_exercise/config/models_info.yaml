@@ -32,13 +32,13 @@ objects:
   green_cylinder_2:
     shape: cylinder
     size: {radius: 0.03, height: 0.06}
-    pose: {x: 0.52, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    pose: {x: 0.58, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
     color: green
 
   green_cylinder_3:
     shape: cylinder
     size: {radius: 0.03, height: 0.06}
-    pose: {x: 0.58, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
+    pose: {x: 0.52, y: -0.08, z: 1.03, roll: 0, pitch: 0, yaw: 0}
     color: green
 
   green_cylinder_4:
@@ -99,47 +99,47 @@ objects:
 obstacles:
   shelf1:
     shape: box
-    size: {x: 0.75, y: 1.5, z: 0.05}
-    pose: {x: -0.80, y: 0.00, z: 0.50, roll: 0, pitch: 0, yaw: 0}
+    size: {x: 0.9, y: 1.8, z: 0.06}
+    pose: {x: -0.80, y: 0.00, z: 0.60, roll: 0, pitch: 0, yaw: 0}
 
   shelf2:
     shape: box
-    size: {x: 0.75, y: 1.5, z: 0.05}
-    pose: {x: -0.80, y: 0.00, z: 1.00, roll: 0, pitch: 0, yaw: 0}
+    size: {x: 0.9, y: 1.8, z: 0.06}
+    pose: {x: -0.80, y: 0.00, z: 1.20, roll: 0, pitch: 0, yaw: 0}
 
   shelf3:
     shape: box
-    size: {x: 0.75, y: 1.5, z: 0.05}
-    pose: {x: -0.80, y: 0.00, z: 1.50, roll: 0, pitch: 0, yaw: 0}
+    size: {x: 0.9, y: 1.8, z: 0.06}
+    pose: {x: -0.80, y: 0.00, z: 1.80, roll: 0, pitch: 0, yaw: 0}
 
   shelf4:
     shape: box
-    size: {x: 0.75, y: 1.5, z: 0.05}
-    pose: {x: -0.80, y: 0.00, z: 2.00, roll: 0, pitch: 0, yaw: 0}
+    size: {x: 0.9, y: 1.8, z: 0.06}
+    pose: {x: -0.80, y: 0.00, z: 2.40, roll: 0, pitch: 0, yaw: 0}
 
   bookshelf_back:
     shape: box
-    size: {x: 0.05, y: 1.5, z: 2.125}
-    pose: {x: -1.15, y: 0.00, z: 1.06, roll: 0, pitch: 0, yaw: 0}
+    size: {x: 0.06, y: 1.8, z: 2.55}
+    pose: {x: -1.15, y: 0.00, z: 1.275, roll: 0, pitch: 0, yaw: 0}
 
 
 targets:
-  target1: {x: -1.48, y: -1.35, z: 4.72}
-  target2: {x: -1.03, y: -1.35, z: 4.72}
-  target3: {x: -0.58, y: -1.35, z: 4.72}
-  target4: {x: -0.12, y: -1.35, z: 4.72}
-  target5: {x: -1.48, y: -0.45, z: 4.72}
-  target6: {x: -1.03, y: -0.45, z: 4.72}
-  target7: {x: -0.58, y: -0.45, z: 4.72}
-  target8: {x: -0.12, y: -0.45, z: 4.72}
-  target9: {x: -1.48, y: 0.45, z: 4.72}
-  target10: {x: -1.03, y: 0.45, z: 4.72}
-  target11: {x: -0.58, y: 0.45, z: 4.72}
-  target12: {x: -0.12, y: 0.45, z: 4.72}
-  target13: {x: -1.48, y: 1.35, z: 4.72}
-  target14: {x: -1.03, y: 1.35, z: 4.72}
-  target15: {x: -0.58, y: 1.35, z: 4.72}
-  target16: {x: -0.12, y: 1.35, z: 4.72}
+  target1: {x: -0.275, y: -0.300, z: 1.26}
+  target2: {x: -0.258, y: -0.300, z: 1.26}
+  target3: {x: -0.242, y: -0.300, z: 1.26}
+  target4: {x: -0.225, y: -0.300, z: 1.26}
+  target5: {x: -0.275, y: -0.100, z: 1.26}
+  target6: {x: -0.258, y: -0.100, z: 1.26}
+  target7: {x: -0.242, y: -0.100, z: 1.26}
+  target8: {x: -0.225, y: -0.100, z: 1.26}
+  target9: {x: -0.275, y: 0.100, z: 1.26}
+  target10: {x: -0.258, y: 0.100, z: 1.26}
+  target11: {x: -0.242, y: 0.100, z: 1.26}
+  target12: {x: -0.225, y: 0.100, z: 1.26}
+  target13: {x: -0.275, y: 0.300, z: 1.26}
+  target14: {x: -0.258, y: 0.300, z: 1.26}
+  target15: {x: -0.242, y: 0.300, z: 1.26}
+  target16: {x: -0.225, y: 0.300, z: 1.26}
 
 
 robot:
