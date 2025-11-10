@@ -51,9 +51,41 @@ done
 echo -e "\n${GREEN}✓ System should be ready${NC}"
 echo ""
 
+# Add obstacles to planning scene
+echo "================================================================================"
+echo -e "${YELLOW}Step 4: Adding obstacles to MoveIt planning scene...${NC}"
+echo "================================================================================"
+echo ""
+echo "Adding conveyor and storage rack to planning scene..."
+ros2 run pick_place_exercise add_planning_scene_objects
+echo ""
+echo -e "${GREEN}✓ Planning scene updated${NC}"
+echo "Waiting 3 seconds for changes to propagate..."
+sleep 3
+echo ""
+
+# Start target visualizer in background
+echo "================================================================================"
+echo -e "${YELLOW}Step 5: Starting target position visualizer...${NC}"
+echo "================================================================================"
+echo ""
+echo "Publishing target markers to /target_markers for RViz visualization..."
+ros2 run pick_place_exercise visualize_targets &
+VISUALIZER_PID=$!
+echo -e "${GREEN}✓ Target visualizer started (PID: $VISUALIZER_PID)${NC}"
+echo ""
+echo "To view targets in RViz:"
+echo "  1. Open RViz (if not already open)"
+echo "  2. Click 'Add' -> 'By topic'"
+echo "  3. Select '/target_markers' -> MarkerArray"
+echo "  4. You should see green spheres at each target position"
+echo ""
+sleep 2
+echo ""
+
 # Run the algorithm
 echo "================================================================================"
-echo -e "${YELLOW}Step 4: Running the pick & place algorithm...${NC}"
+echo -e "${YELLOW}Step 6: Running the pick & place algorithm...${NC}"
 echo "================================================================================"
 echo ""
 

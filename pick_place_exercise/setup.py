@@ -33,7 +33,8 @@ setup(
             'test_gripper_setup = pick_place_exercise.test_gripper_setup:main',
             'run_machine_vision = pick_place_exercise.run_machine_vision:main',
             # 'test_machine_vision_safe = pick_place_exercise.simple_machine_vision_test:main',
-            'add_planning_scene_objects = pick_place_exercise.add_planning_scene_objects:main'
+            'add_planning_scene_objects = pick_place_exercise.add_planning_scene_objects:main',
+            'visualize_targets = pick_place_exercise.visualize_targets:main'
         ],
     },
 )
