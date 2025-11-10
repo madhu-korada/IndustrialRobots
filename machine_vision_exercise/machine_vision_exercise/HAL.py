@@ -678,15 +678,29 @@ def attach(item):
     attach_response = link_attacher_client.send_attach_request('ur5', 'EE_robotiq_2f85', item, item)
     link_attacher_client.get_logger().info('Attach Response: %s' % attach_response.success)
 
-def detach(): 
-    """Detach all objects from gripper"""
+def detach(item=None): 
+    """Detach object from gripper. If item is None, detach all possible objects"""
     link_attacher_client = LinkAttacherClient()
-    objects = [
-        'blue_sphere', 'red_sphere', 'green_sphere', 'purple_sphere',
-        'green_cylinder', 'purple_cylinder', 'red_cylinder', 'blue_cylinder'
-    ]
-    for obj in objects:
-        link_attacher_client.send_detach_request('ur5', 'EE_robotiq_2f85', obj, obj)
+    
+    if item is not None:
+        # Detach specific object
+        link_attacher_client.send_detach_request('ur5', 'EE_robotiq_2f85', item, item)
+        link_attacher_client.get_logger().info(f'Detach request sent for: {item}')
+    else:
+        # Detach all possible objects (for safety)
+        # Include all 16 new objects + old objects for compatibility
+        objects = [
+            # Old objects (for compatibility)
+            'blue_sphere', 'red_sphere', 'green_sphere', 'purple_sphere',
+            'green_cylinder', 'purple_cylinder', 'red_cylinder', 'blue_cylinder',
+            # New 16 objects
+            'red_cylinder_1', 'red_cylinder_2', 'red_cylinder_3', 'red_cylinder_4',
+            'green_cylinder_1', 'green_cylinder_2', 'green_cylinder_3', 'green_cylinder_4',
+            'blue_box_1', 'blue_box_2', 'blue_box_3', 'blue_box_4',
+            'purple_box_1', 'purple_box_2', 'purple_box_3', 'purple_box_4'
+        ]
+        for obj in objects:
+            link_attacher_client.send_detach_request('ur5', 'EE_robotiq_2f85', obj, obj)
 
 def GripperSet(relative_closure, wait_time):
     """Set gripper closure percentage (100% full open, 0% full closed)"""

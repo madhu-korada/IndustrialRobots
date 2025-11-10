@@ -378,8 +378,8 @@ def main():
             MoveLinear(approach_target, down_orientation, 0.1, 1.0)
             
             # Step 12: Release object
-            print("\n10. Releasing object...")
-            detach()
+            print(f"\n10. Releasing {object_name}...")
+            detach(object_name)  # Detach the specific object that was attached
             GripperSet(0, 1.0)
             time.sleep(0.5)
             

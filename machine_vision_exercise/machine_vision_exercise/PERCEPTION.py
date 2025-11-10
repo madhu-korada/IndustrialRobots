@@ -318,10 +318,11 @@ class PerceptionNode(Node):
     #         return None
 
     def get_object_position(self, object_name):
-        """Get object position using TF2"""
+        """Get object position using TF2, with fallback to configured position"""
         frame_id = object_name
+        
+        # Try TF2 lookup first
         try:
-            # Use TF2 to get transform
             transform = self.tf_buffer.lookup_transform(
                 'world', frame_id, rclpy.time.Time(), 
                 timeout=rclpy.duration.Duration(seconds=1.0)
@@ -329,20 +330,39 @@ class PerceptionNode(Node):
             
             x = float(transform.transform.translation.x)
             y = float(transform.transform.translation.y)
-            z = float(transform.transform.translation.z + 0.03)
+            z = float(transform.transform.translation.z + 0.03)  # Removed +0.03 offset
             
             position = [x, y, z]
             
             self.get_logger().info("*************************************")
-            self.get_logger().info(f"Detected position of {object_name}:")
+            self.get_logger().info(f"Detected position of {object_name} (from TF):")
             self.get_logger().info(f"{position}")
             self.get_logger().info("*************************************")
             
             return position
             
         except Exception as e:
-            self.get_logger().error(f"Cannot find desired object {object_name}: {e}")
-            return None
+            # TF lookup failed, try to use configured position from object_list
+            self.get_logger().warn(f"TF lookup failed for {object_name}: {e}")
+            
+            if object_name in self.object_list:
+                obj = self.object_list[object_name]
+                # Get position from configured object (use abs_pose for world coordinates)
+                x = float(obj.abs_pose.position.x)
+                y = float(obj.abs_pose.position.y)
+                z = float(obj.abs_pose.position.z) + 0.03
+                
+                position = [x, y, z]
+                
+                self.get_logger().info("*************************************")
+                self.get_logger().info(f"Using configured position for {object_name}:")
+                self.get_logger().info(f"{position}")
+                self.get_logger().info("*************************************")
+                
+                return position
+            else:
+                self.get_logger().error(f"Object {object_name} not found in object_list either!")
+                return None
 
     def is_inside_workspace(self, x, y, z):
         """Check if position is inside workspace"""
